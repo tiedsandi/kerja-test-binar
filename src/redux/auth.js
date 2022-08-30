@@ -27,7 +27,8 @@ export const AuthRegister = createAsyncThunk(
 
 const initialState = {
     loading: false,
-    error: null
+    error: null,
+    success: null
 };
 
 const authSlice = createSlice({
@@ -38,8 +39,10 @@ const authSlice = createSlice({
             return { ...state, loading: true }
         },
         [AuthLogin.fulfilled]: (state, action) => {
-            window.location.href = '/';
-            return { ...state, loading: false }
+            setTimeout(() => {
+                window.location.href = '/dashboard';
+            }, 2000);
+            return { ...state, loading: false, success: 'login successed' }
         },
         [AuthLogin.rejected]: (state, action) => {
             return { ...state, loading: false, error: action.error.message }
@@ -49,11 +52,12 @@ const authSlice = createSlice({
         },
         [AuthRegister.fulfilled]: (state, action) => {
             setTimeout(() => {
-                window.location.href = '/login';
+                window.location.href = '/';
             }, 2000);
-            return { ...state, loading: false }
+            return { ...state, loading: false, success: 'please login' }
         },
         [AuthRegister.rejected]: (state, action) => {
+            console.log(action.error.message)
             return { ...state, loading: false, error: action.error.message }
         },
     }

@@ -1,3 +1,18 @@
 .register-section {
     text-align: center;
+
+    h3 {
+        margin-bottom: 0.3rem;
+        text-align: start;
+        font-weight: 300;
+        font-size: 16px;
+    }
+
+    .sign {
+        color: rgb(243, 57, 57);
+    }
+
+    .sign-success {
+        color: rgb(65, 52, 243);
+    }
 }
