@@ -3,7 +3,8 @@ import React from 'react'
 const NotFound = () => {
   return (
     <div>
-      <button onClick={() => (window.location.href = "/")} >
+      <h1>Page Not Found</h1>
+      <button className='flat-button' onClick={() => (window.location.href = "/")} >
         Back to Home
       </button>
     </div>
