@@ -19,7 +19,6 @@ const Register = () => {
       password
     }
     dispatch(AuthRegister(data))
-
   }
   return (
     <div className='register-section'>

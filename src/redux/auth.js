@@ -6,7 +6,7 @@ export const AuthLogin = createAsyncThunk(
     async (data) => {
         const res = await testbinarapi.post('/auth/login', data);
         if (res.data.errors == null) {
-            localStorage.setItem('token', res.data.result.access_token)
+            localStorage.setItem('access_token', res.data.result.access_token)
         } else {
             throw new Error('email / password wrong');
         }
