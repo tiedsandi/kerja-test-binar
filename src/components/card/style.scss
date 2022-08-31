@@ -19,8 +19,11 @@
         padding: .5rem;
 
         .title {
+            overflow: hidden;
+            text-overflow: ellipsis;
             font-size: 18px;
             margin-bottom: 0.5rem;
+            max-width: 400px;
         }
 
         .price {
@@ -34,6 +37,7 @@
         right: 0;
         color: rgb(255, 255, 255);
         font-size: 22px;
+        z-index: 1;
 
 
         .icon-edit {

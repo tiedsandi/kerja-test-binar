@@ -16,12 +16,13 @@ export const fetchProduct = createAsyncThunk(
 export const createProduct = createAsyncThunk(
     'auth/createProduct',
     async (data) => {
-        const res = await testbinarapi.post('/auth/signup', data);
-        if (res.data.errors == null) {
-            return res.data;
-        } else {
-            throw new Error(res.data.errors.email[0]);
-        }
+        const res = await testbinarapi.post('v1/products', data, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem("access_token")
+            }
+        });
+        return res.data
     }
 )
 
@@ -71,12 +72,15 @@ const productSlice = createSlice({
         },
         // ======= create ======= //
         [createProduct.pending]: (state) => {
+            console.log('pending')
             return { ...state, loading: true, error: null }
         },
         [createProduct.fulfilled]: (state, action) => {
-            return { ...state, loading: false, success: 'please login' }
+            console.log('suksess')
+            return { ...state, loading: false }
         },
         [createProduct.rejected]: (state, action) => {
+            console.log('gagal')
             console.log(action.error.message)
             return { ...state, loading: false, error: action.error.message }
         },
