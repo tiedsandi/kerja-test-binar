@@ -7,15 +7,13 @@ const Create = () => {
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [imgUrl, setImgUrl] = useState('');
-    const [error, setError] = useState('');
-    const [success, setSuccess] = useState('');
 
     const dispatch = useDispatch();
 
     const submitCreate = (e) => {
         e.preventDefault()
         if (name === "" || price === "" || imgUrl === "") {
-            setError('fill in all forms')
+            alert('fill in all forms')
         } else {
             const data = {
                 name,
@@ -23,11 +21,8 @@ const Create = () => {
                 imageurl: imgUrl
             }
             dispatch(createProduct(data)).then(
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000)
+                alert('product added')
             )
-            setSuccess('successfully added product')
         }
     }
 
@@ -36,8 +31,8 @@ const Create = () => {
             <div className="modal-body">
                 <section className='form-modal'>
                     <h1 className='title-modal'>Create New</h1>
-                    {error && error}
-                    {success && success}
+                    {/* {error && error}
+                    {success && success} */}
                     <ul>
                         <li>
                             <input

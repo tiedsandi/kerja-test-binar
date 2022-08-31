@@ -41,7 +41,7 @@ const authSlice = createSlice({
         [AuthLogin.fulfilled]: (state, action) => {
             setTimeout(() => {
                 window.location.href = '/dashboard';
-            }, 2000);
+            }, 1000);
             return { ...state, loading: false, success: 'login successed' }
         },
         [AuthLogin.rejected]: (state, action) => {

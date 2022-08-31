@@ -23,11 +23,13 @@ const Dashboard = () => {
       <hr />
       <div className="product-list">
         {
-          products && products.map((product) => (
-            <Fragment key={product.id}>
-              <Card data={product} />
-            </Fragment>
-          ))
+          products && products.length > 0 ? (
+            products.map((product) => (
+              <Fragment key={product.id}>
+                <Card data={product} />
+              </Fragment>
+            ))
+          ) : <h1>No Products</h1>
         }
       </div>
     </div>

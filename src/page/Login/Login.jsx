@@ -8,6 +8,8 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const error = useSelector(state => state.auth.error)
+  const success = useSelector(state => state.auth.success)
+
   const dispatch = useDispatch();
   const submitLogin = (e) => {
     e.preventDefault()
@@ -22,6 +24,7 @@ const Login = () => {
       <h1 >Login</h1>
       <section className='contact-form'>
         {error && <h3 className='sign'>{error}</h3>}
+        {success && <h3 className='sign-success'>{success}</h3>}
         <form onSubmit={submitLogin} >
           <ul>
             <li>

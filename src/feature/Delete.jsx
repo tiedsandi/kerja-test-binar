@@ -7,15 +7,12 @@ const Delete = ({ name }) => {
     const id = useSelector((state) => state.modal.id);
     const dispatch = useDispatch()
 
-    const submitDelete = (e) => {
-        e.preventDefault()
-        dispatch(deleteProduct(id))
-        // .then(
-        //     setTimeout(() => {
-        //         window.location.reload();
-        //     }, 1000)
-        // )
+    const submitDelete = () => {
+        dispatch(deleteProduct(id)).then(
+            alert('successfully deleted')
+        )
     }
+
     return (
         <>
             <div className='title-delete' >

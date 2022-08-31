@@ -23,7 +23,9 @@ const Edit = ({ product }) => {
                 price,
                 imageurl: imgUrl
             }
-            dispatch(editProduct({ id, data }))
+            dispatch(editProduct({ id, data })).then(
+                alert('edited successfully')
+            )
         }
     }
 
