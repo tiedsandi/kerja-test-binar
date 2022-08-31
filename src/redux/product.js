@@ -1,10 +1,22 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import testbinarapi from './api/testbinarapi';
 
-export const fetchProduct = createAsyncThunk(
-    'auth/fetchProduct',
+export const fetchProducts = createAsyncThunk(
+    'auth/fetchProducts',
     async () => {
         const res = await testbinarapi.get('/v1/products', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem("access_token")
+            }
+        });
+        return res.data.result;
+    }
+)
+
+export const fetchProduct = createAsyncThunk(
+    'auth/fetchProduct',
+    async (id) => {
+        const res = await testbinarapi.get(`/v1/products/${id}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem("access_token")
             }
@@ -16,7 +28,7 @@ export const fetchProduct = createAsyncThunk(
 export const createProduct = createAsyncThunk(
     'auth/createProduct',
     async (data) => {
-        const res = await testbinarapi.post('v1/products', data, {
+        const res = await testbinarapi.post('/v1/products', data, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.getItem("access_token")
@@ -28,8 +40,8 @@ export const createProduct = createAsyncThunk(
 
 export const editProduct = createAsyncThunk(
     'auth/editProduct',
-    async (data) => {
-        const res = await testbinarapi.post('/auth/signup', data);
+    async ({ id, data }) => {
+        const res = await testbinarapi.put(`/v1/products/${id}`, data);
         if (res.data.errors == null) {
             return res.data;
         } else {
@@ -40,18 +52,20 @@ export const editProduct = createAsyncThunk(
 
 export const deleteProduct = createAsyncThunk(
     'auth/deleteProduct',
-    async (data) => {
-        const res = await testbinarapi.post('/auth/signup', data);
-        if (res.data.errors == null) {
-            return res.data;
-        } else {
-            throw new Error(res.data.errors.email[0]);
-        }
+    async (id) => {
+        const res = await testbinarapi.delete(`/v1/products/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem("access_token")
+            }
+        });
+        return res.data;
     }
 )
 
 const initialState = {
     products: null,
+    product: null,
     loading: false,
     error: null,
 };
@@ -60,27 +74,37 @@ const productSlice = createSlice({
     name: 'auth',
     initialState,
     extraReducers: {
-        // ======= fetch ======= //
+        // ======= products ======= //
+        [fetchProducts.pending]: (state) => {
+            return { ...state, loading: true }
+        },
+        [fetchProducts.fulfilled]: (state, action) => {
+            return { ...state, loading: false, products: action.payload }
+        },
+        [fetchProducts.rejected]: (state, action) => {
+            return { ...state, loading: false, error: action.error.message }
+        },
+        // ======= product ======= //
         [fetchProduct.pending]: (state) => {
             return { ...state, loading: true }
         },
         [fetchProduct.fulfilled]: (state, action) => {
-            return { ...state, loading: false, products: action.payload }
+            return { ...state, loading: false, product: action.payload }
         },
         [fetchProduct.rejected]: (state, action) => {
             return { ...state, loading: false, error: action.error.message }
         },
         // ======= create ======= //
         [createProduct.pending]: (state) => {
-            console.log('pending')
+
             return { ...state, loading: true, error: null }
         },
         [createProduct.fulfilled]: (state, action) => {
-            console.log('suksess')
+
             return { ...state, loading: false }
         },
         [createProduct.rejected]: (state, action) => {
-            console.log('gagal')
+
             console.log(action.error.message)
             return { ...state, loading: false, error: action.error.message }
         },
@@ -89,7 +113,7 @@ const productSlice = createSlice({
             return { ...state, loading: true }
         },
         [editProduct.fulfilled]: (state, action) => {
-            return { ...state, loading: false, success: 'login successed' }
+            return { ...state, loading: false }
         },
         [editProduct.rejected]: (state, action) => {
             return { ...state, loading: false, error: action.error.message }
@@ -99,7 +123,7 @@ const productSlice = createSlice({
             return { ...state, loading: true, error: null }
         },
         [deleteProduct.fulfilled]: (state, action) => {
-            return { ...state, loading: false, success: 'please login' }
+            return { ...state, loading: false }
         },
         [deleteProduct.rejected]: (state, action) => {
             console.log(action.error.message)

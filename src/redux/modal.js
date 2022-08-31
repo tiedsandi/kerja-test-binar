@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-    type: ''
+    type: null,
+    id: null,
 };
 
 const modalSlice = createSlice({
@@ -10,9 +11,12 @@ const modalSlice = createSlice({
     reducers: {
         setModal: (state, action) => {
             state.type = action.payload;
+        },
+        setId: (state, action) => {
+            state.id = action.payload;
         }
     }
 })
 
-export const { setModal } = modalSlice.actions;
+export const { setModal, setId } = modalSlice.actions;
 export default modalSlice.reducer;

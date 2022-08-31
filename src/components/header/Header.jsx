@@ -5,6 +5,7 @@ import './style.scss'
 
 const Header = () => {
     const showModal = useSelector((state) => state.modal.type);
+
     const dispatch = useDispatch();
     const logout = () => {
         localStorage.removeItem("access_token");
@@ -12,7 +13,7 @@ const Header = () => {
     }
     return (
         <>
-            {showModal === 'create' && <Modal />}
+            {showModal && <Modal />}
             <div className='header'>
                 <div className='left'>
                     <h1 className='title'>Product List</h1>

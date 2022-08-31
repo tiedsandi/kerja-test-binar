@@ -2,31 +2,30 @@ import './style.scss'
 import Header from '../../components/header/Header'
 import Card from '../../components/card/Card'
 import { useSelector, useDispatch } from 'react-redux'
-import { Fragment, useEffect, useState } from 'react'
-import { fetchProduct } from '../../redux/product'
+import { Fragment, useEffect } from 'react'
+import { fetchProducts } from '../../redux/product'
+import Modal from '../../components/Modal/Modal'
 
 
 const Dashboard = () => {
   const products = useSelector((state) => state.product.products)
-  const [modalEdit, setModalEdit] = useState('false')
-  const [modalDelete, setModalDelete] = useState('false')
+  const showModal = useSelector((state) => state.modal.type);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchProduct())
+    dispatch(fetchProducts())
   }, [dispatch]);
 
   return (
     <div className='dashboard'>
-      {/* {modalEdit && <Modaledit />}
-      {modalDelete && <Modaldelete />} */}
+      {showModal && <Modal />}
       <Header />
       <hr />
       <div className="product-list">
         {
           products && products.map((product) => (
             <Fragment key={product.id}>
-              <Card data={product} setEdit={setModalEdit} setDelete={setModalDelete} />
+              <Card data={product} />
             </Fragment>
           ))
         }

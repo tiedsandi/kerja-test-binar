@@ -33,39 +33,40 @@ const Create = () => {
 
     return (
         <div className='create'>
-            <h1 className='title-modal'>Create New</h1>
-            {error && error}
-            {success && success}
-            <section className='form-modal'>
-                <ul>
-                    <li>
-                        <input
-                            placeholder="Product Name"
-                            type="text"
-                            name="name"
-                            onChange={(e) => setName(e.target.value)}
-                            required
-                        />
-                    </li>
-                    <li>
-                        <input
-                            placeholder="Price (Dollar USD)"
-                            type="text"
-                            name="price"
-                            onChange={(e) => setPrice(e.target.value)}
-                            required />
-                    </li>
-                    <li>
-                        <input
-                            placeholder="Image url"
-                            type="text"
-                            name="url"
-                            onChange={(e) => setImgUrl(e.target.value)}
-                            required />
-                    </li>
-                </ul>
-            </section>
-            <hr />
+            <div className="modal-body">
+                <section className='form-modal'>
+                    <h1 className='title-modal'>Create New</h1>
+                    {error && error}
+                    {success && success}
+                    <ul>
+                        <li>
+                            <input
+                                placeholder="Product Name"
+                                type="text"
+                                name="name"
+                                onChange={(e) => setName(e.target.value)}
+                                required
+                            />
+                        </li>
+                        <li>
+                            <input
+                                placeholder="Price (Dollar USD)"
+                                type="text"
+                                name="price"
+                                onChange={(e) => setPrice(e.target.value)}
+                                required />
+                        </li>
+                        <li>
+                            <input
+                                placeholder="Image url"
+                                type="text"
+                                name="url"
+                                onChange={(e) => setImgUrl(e.target.value)}
+                                required />
+                        </li>
+                    </ul>
+                </section>
+            </div>
             <div className="footer-modal">
                 <div className="btn-back" onClick={() => dispatch(setModal(''))}>Back</div>
                 <button className='btn-submit' onClick={submitCreate}>Create</button>
